@@ -54,7 +54,7 @@ describe('npmjs.com package search', () => {
       const searchPageTitle = await driver.getTitle()
       expect(searchPageTitle).toEqual('selenium bootcamp - Google Search')
 
-      const listingMatch = await driver.findElement(By.xpath(`//*[@id="rso"]/div[1]/div/div[1]/a/h3/span`))
+      const listingMatch = await driver.findElement(By.xpath(`(//div[@class= 'rc']//h3/span)[1]`))
       expect(listingMatch).toBeTruthy()
 
       const listingText = await listingMatch.getText()
