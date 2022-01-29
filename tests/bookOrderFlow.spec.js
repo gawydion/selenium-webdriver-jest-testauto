@@ -105,8 +105,6 @@ describe('Order a book on http://practice.automationtesting.in/', () => {
       expect(addToBasketButton).toBeTruthy()
       await addToBasketButton.click()
 
-      // todo ogarnac cache!! ksiazki z poprzedniej egzekucji sa w koszyku?? moze to nie chache? - wyzerowac koszyk jakby co
-
       //todo check popup "“Android Quick Start Guide” has been added to your basket."
 
       //go to basket
@@ -128,12 +126,17 @@ describe('Order a book on http://practice.automationtesting.in/', () => {
       //input[@id='billing_last_name']
       //input[@id='billing_email']
       //input[@id='billing_phone']
-
-      //todo country pick
-
       //input[@id='billing_address_1']
       //input[@id='billing_postcode']
       //input[@id='billing_city']
+
+      const countrySelectDropDown = await driver.findElement(By.xpath(`//div[@id='s2id_billing_country']`)) 
+      expect(countrySelectDropDown).toBeTruthy()
+      await countrySelectDropDown.click()
+
+      await driver
+      .wait(until.elementLocated(By.xpath(`//input[@id='s2id_autogen1_search']`)))
+      .sendKeys('Poland', Key.ENTER)
 
       //todo check price again
 
@@ -148,9 +151,10 @@ describe('Order a book on http://practice.automationtesting.in/', () => {
       expect(placeOrderButton).toBeTruthy()
       await placeOrderButton.click()
 
+      await driver.sleep(10000) //ten sleep pomaga - trzeba poczekać az sie order detail zaladuje
+
       //final check
       const orderDetailsPage = await driver.findElement(By.xpath(`//div[@class='woocommerce']//descendant::h2[contains(text(), 'Order Details')]`)) 
-      await driver.sleep(10000)
     } 
     // webriver quit
     finally {
