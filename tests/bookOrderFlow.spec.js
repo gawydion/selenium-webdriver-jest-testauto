@@ -56,6 +56,27 @@ describe('Order a book on http://practice.automationtesting.in/', () => {
       const myAccountPageTitle = await driver.getTitle()
       expect(myAccountPageTitle).toEqual('My Account – Automation Practice Site')
 
+      //empty basket
+      let cartButton = await driver.findElement(By.xpath(`//li[contains(@class, 'wpmenucart-display-standard')]`)) 
+      expect(cartButton).toBeTruthy()
+      await cartButton.click()
+
+      await driver.wait(() => {
+        return driver.executeScript('return document.readyState').then(state => {
+          return state === 'complete'
+        })
+      }, 120000)
+
+      try{
+        const productRemoveButton = await driver.findElement(By.xpath(`//td[@class='product-remove']/a[@title='Remove this item']`)) 
+        expect(productRemoveButton).toBeTruthy()
+        await productRemoveButton.click()
+      }catch(e){
+        if(e.name === 'NoSuchElementError') {
+          console.debug('basket is emtpy - proceeding')
+        }
+      }
+  
       // go to shop page
       const myShopButton = await driver.findElement(By.xpath(`//li[contains(@class, 'menu-item')][1]`)) //todo -> czemu ten xpath nie dziala? //li//a[contains(text(), 'My Account')]/@href
       expect(myShopButton).toBeTruthy()
@@ -84,66 +105,52 @@ describe('Order a book on http://practice.automationtesting.in/', () => {
       expect(addToBasketButton).toBeTruthy()
       await addToBasketButton.click()
 
+      // todo ogarnac cache!! ksiazki z poprzedniej egzekucji sa w koszyku?? moze to nie chache? - wyzerowac koszyk jakby co
+
       //todo check popup "“Android Quick Start Guide” has been added to your basket."
 
       //go to basket
-      const cartButton = await driver.findElement(By.xpath(`//li[contains(@class, 'wpmenucart-display-standard')]`)) 
+      cartButton = await driver.findElement(By.xpath(`//li[contains(@class, 'wpmenucart-display-standard')]`)) 
       expect(cartButton).toBeTruthy()
       await cartButton.click()
 
-      // const listingMatch = await driver.findElement(By.xpath(`//section//a[.//h3[.='selenium-webdriver']]`))
-      // await listingMatch.click()
+      //todo check the title
+      //todo check the price
+      //todo check the quantity
 
-      // await driver.wait(10000)
+      // proceed to checkout
+      const checkoutButton = await driver.findElement(By.xpath(`//div[@class='wc-proceed-to-checkout']/a`)) 
+      expect(checkoutButton).toBeTruthy()
+      await checkoutButton.click()
 
-    //   // 2.0 Fill up search field using my search criteria (selenium-webdriver), then hit enter key
-    //   await driver
-    //     .wait(until.elementLocated(By.xpath(`//input[@name='q']`)))
-    //     .sendKeys('selenium-webdriver', Key.ENTER)
+      //todo fill the form
+      //input[@id='billing_first_name']
+      //input[@id='billing_last_name']
+      //input[@id='billing_email']
+      //input[@id='billing_phone']
 
-    //   // Wait until browser loads completely
-    //   await driver.sleep(2000)
-    //   await driver.wait(() => {
-    //     return driver.executeScript('return document.readyState').then(state => {
-    //       return state === 'complete'
-    //     })
-    //   }, 120000)
+      //todo country pick
 
-    //   // 2.1 Validate that the title matches expected search page title
-    //   const searchPageTitle = await driver.getTitle()
-    //   expect(searchPageTitle).toEqual('selenium-webdriver - npm search')
+      //input[@id='billing_address_1']
+      //input[@id='billing_postcode']
+      //input[@id='billing_city']
 
-    //   // 2.2 Validate that we have a result that matches our search criteria
-      // const listingMatch = await driver.findElement(By.xpath(`//section//a[.//h3[.='selenium-webdriver']]`))
-      // expect(listingMatch).toBeTruthy()
+      //todo check price again
 
-    //   // 2.3 Validate that result matches our keywords
-    //   const keywords = ['automation', 'selenium', 'testing', 'webdriver', 'webdriverjs']
-    //   for (keyword of keywords) {
-    //     const keywordMatch = await driver.findElement(
-    //       By.xpath(`//section//a[.//h3[.='selenium-webdriver']]/ancestor::div[contains(@class, 'items-end')]/following-sibling::ul/li/a[.='${keyword}']`)
-    //     )
-    //     expect(keywordMatch).toBeTruthy()
-    //   }
+      //payment method
+      const paymentMethodCheckBox = await driver.findElement(By.xpath(`//input[@id='payment_method_cheque']`)) 
+      expect(paymentMethodCheckBox).toBeTruthy()
+      await paymentMethodCheckBox.click()
 
-      // // 3.0 Click on the package that matches our criteria
-      // await listingMatch.click()
+      //place order
+      
+      const placeOrderButton = await driver.findElement(By.xpath(`//input[@id='place_order']`)) 
+      expect(placeOrderButton).toBeTruthy()
+      await placeOrderButton.click()
 
-    //   // Wait until browser loads completely
-    //   await driver.sleep(2000)
-    //   await driver.wait(() => {
-    //     return driver.executeScript('return document.readyState').then(state => {
-    //       return state === 'complete'
-    //     })
-    //   }, 120000)
-
-    //   // 3.1 Validate that the title matches expected package page title
-    //   const packagePageTitle = await driver.getTitle()
-    //   expect(packagePageTitle).toEqual('selenium-webdriver - npm')
-
-      // 3.2 Validate that this package matches our search criteria
-      //const packageTitle = await driver.findElement(By.xpath(`//h2//span[.='selenium-webdriver']`))
-      //expect(packageTitle).toBeTruthy()
+      //final check
+      const orderDetailsPage = await driver.findElement(By.xpath(`//div[@class='woocommerce']//descendant::h2[contains(text(), 'Order Details')]`)) 
+      await driver.sleep(10000)
     } 
     // webriver quit
     finally {
@@ -151,3 +158,6 @@ describe('Order a book on http://practice.automationtesting.in/', () => {
      }
    })
 })
+
+
+

@@ -1,16 +1,17 @@
 {
-  "name": "selenium-bootcamp",
+  "name": "selenium-webdriver-jest-testauto",
   "version": "1.0.0",
-  "description": "Jest + Selenium Boilerplate",
+  "description": "Jest + Selenium test in http://practice.automationtesting.in/",
   "license": "ISC",
-  "author": "Krizzchanne Cid <kcid@cambridge.org>",
+  "author": "gawydion@gmail.com",
   "scripts": {
     "test": "jest"
   },
   "keywords": [
     "automation",
     "jest",
-    "selenium"
+    "selenium",
+    "webdriver"
   ],
   "devDependencies": {
     "jest": "^26.6.3",
