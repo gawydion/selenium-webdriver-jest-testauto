@@ -39,9 +39,9 @@ describe('Order a book on http://practice.automationtesting.in/', () => {
       expect(homepageTitle).toEqual('Automation Practice Site')
 
       // open login screen
-      const myShopButton = await driver.findElement(By.xpath(`//li[contains(@class, 'menu-item')][2]`)) //todo -> czemu ten xpath nie dziala? //li//a[contains(text(), 'My Account')]/@href
-      expect(myShopButton).toBeTruthy()
-      await myShopButton.click()
+      const myAccButton = await driver.findElement(By.xpath(`//li[contains(@class, 'menu-item')][2]`)) //todo -> czemu ten xpath nie dziala? //li//a[contains(text(), 'My Account')]/@href
+      expect(myAccButton).toBeTruthy()
+      await myAccButton.click()
 
       // login to portal
       await driver
@@ -53,7 +53,43 @@ describe('Order a book on http://practice.automationtesting.in/', () => {
       .sendKeys('Jebacpis111', Key.ENTER)
 
       // check correct login
+      const myAccountPageTitle = await driver.getTitle()
+      expect(myAccountPageTitle).toEqual('My Account – Automation Practice Site')
 
+      // go to shop page
+      const myShopButton = await driver.findElement(By.xpath(`//li[contains(@class, 'menu-item')][1]`)) //todo -> czemu ten xpath nie dziala? //li//a[contains(text(), 'My Account')]/@href
+      expect(myShopButton).toBeTruthy()
+      await myShopButton.click()
+
+      await driver.wait(() => {
+        return driver.executeScript('return document.readyState').then(state => {
+          return state === 'complete'
+        })
+      }, 120000)
+
+      // check page title
+      const productPageTitle = await driver.getTitle()
+      expect(productPageTitle).toEqual('Products – Automation Practice Site')
+
+      // click on android book
+      const androidBook = await driver.findElement(By.xpath(`//li[contains(@class, 'product')]//descendant::h3[contains(text(), 'Android Quick Start Guide')]`)) 
+      expect(androidBook).toBeTruthy()
+      await androidBook.click()
+
+      //todo check the title
+      //todo save the price
+
+      // add to basket
+      const addToBasketButton = await driver.findElement(By.xpath(`//button[@type='submit']`)) 
+      expect(addToBasketButton).toBeTruthy()
+      await addToBasketButton.click()
+
+      //todo check popup "“Android Quick Start Guide” has been added to your basket."
+
+      //go to basket
+      const cartButton = await driver.findElement(By.xpath(`//li[contains(@class, 'wpmenucart-display-standard')]`)) 
+      expect(cartButton).toBeTruthy()
+      await cartButton.click()
 
       // const listingMatch = await driver.findElement(By.xpath(`//section//a[.//h3[.='selenium-webdriver']]`))
       // await listingMatch.click()
