@@ -52,7 +52,7 @@ describe('npmjs.com package search', () => {
 
       // 1.1 Validate that the title matches expected homepage title
       const homepageTitle = await driver.getTitle()
-      expect(homepageTitle).toEqual('npm | build amazing things')
+      expect(homepageTitle).toEqual('npm')
 
       // 2.0 Fill up search field using my search criteria (selenium-webdriver), then hit enter key
       await driver

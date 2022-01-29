@@ -5,7 +5,7 @@
     [
       "./node_modules/jest-html-reporter",
       {
-        "pageTitle": "Tests for Search API & Search Ingest",
+        "pageTitle": "SmartBear interview",
         "outputPath": "reports/index.html",
         "includeFailureMsg": true
       }

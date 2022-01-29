@@ -47,7 +47,7 @@ describe('npmjs.com random expansion', () => {
 
       // 1.1 Validate that the title matches expected homepage title
       const homepageTitle = await driver.getTitle()
-      expect(homepageTitle).toEqual('npm | build amazing things')
+      expect(homepageTitle).toEqual('npm')
 
       // Find our expansion text element and store it in a variable
       const expansionElement = await driver.findElement(

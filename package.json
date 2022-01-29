@@ -17,7 +17,7 @@
     "jest-html-reporter": "^3.3.0"
   },
   "dependencies": {
-    "chromedriver": "^87.0.0",
+    "chromedriver": "^97.0.0",
     "selenium-webdriver": "^4.0.0-alpha.7"
   }
 }
