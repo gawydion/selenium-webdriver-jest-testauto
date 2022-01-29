@@ -51,7 +51,8 @@ describe('Order a book on http://practice.automationtesting.in/', () => {
       await driver
       .wait(until.elementLocated(By.xpath(`//input[@name='password']`)))
       .sendKeys('Jebacpis111', Key.ENTER)
-
+      //todo https://docs.github.com/en/actions/security-guides/encrypted-secrets
+      
       // check correct login
       const myAccountPageTitle = await driver.getTitle()
       expect(myAccountPageTitle).toEqual('My Account – Automation Practice Site')
