@@ -4,6 +4,8 @@ const { Options } = require('selenium-webdriver/chrome')
 var {driver} = require('../index.js');
 const HomePage = require ('../pages/homePage.js');
 const LoginPage = require ('../pages/loginPage.js');
+const CartPage = require ('../pages/cartPage.js');
+const ShopPage = require ('../pages/shopPage.js');
 
 // test timeout 5 minutes
 jest.setTimeout(300000)
@@ -16,72 +18,20 @@ jest.setTimeout(300000)
 describe('Order a book on http://practice.automationtesting.in/', () => {
   beforeAll(async () => {
     HomePage.visit()
-    await HomePage.isLoaded()
     LoginPage.openFromTopMenu()
-    await LoginPage.isLoaded()
+    await LoginPage.loginToPortal()
+    await CartPage.openFromTopMenu()
+    await CartPage.emptyCart()
   })
 
   afterAll(async () => {
     await driver.quit()
   })
 
-  test('Login to portal', async () => {
+  test('Buy a book', async () => {
 
-    // login to portal
-    await driver
-    .wait(until.elementLocated(By.xpath(`//input[@name='username']`)))
-    .sendKeys('gawydion@gmail.com')
-
-    await driver
-    .wait(until.elementLocated(By.xpath(`//input[@name='password']`)))
-    .sendKeys('Jebacpis111', Key.ENTER)
-    //todo https://docs.github.com/en/actions/security-guides/encrypted-secrets
-      
-    // check correct login
-    const myAccountPageTitle = await driver.getTitle()
-    expect(myAccountPageTitle).toEqual('My Account – Automation Practice Site')
-  
-
-      //empty basket
-      let cartButton = await driver.findElement(By.xpath(`//li[contains(@class, 'wpmenucart-display-standard')]`)) 
-      expect(cartButton).toBeTruthy()
-      await cartButton.click()
-
-      await driver.wait(() => {
-        return driver.executeScript('return document.readyState').then(state => {
-          return state === 'complete'
-        })
-      }, 120000)
-
-      try{
-        const productRemoveButton = await driver.findElement(By.xpath(`//td[@class='product-remove']/a[@title='Remove this item']`)) 
-        expect(productRemoveButton).toBeTruthy()
-        await productRemoveButton.click()
-      }catch(e){
-        if(e.name === 'NoSuchElementError') {
-          console.debug('basket is emtpy - proceeding')
-        }
-      }
-  
-      // go to shop page
-      const myShopButton = await driver.findElement(By.xpath(`//li[contains(@class, 'menu-item')][1]`)) //todo -> czemu ten xpath nie dziala? //li//a[contains(text(), 'My Account')]/@href
-      expect(myShopButton).toBeTruthy()
-      await myShopButton.click()
-
-      await driver.wait(() => {
-        return driver.executeScript('return document.readyState').then(state => {
-          return state === 'complete'
-        })
-      }, 120000)
-
-      // check page title
-      const productPageTitle = await driver.getTitle()
-      expect(productPageTitle).toEqual('Products – Automation Practice Site')
-
-      // click on android book
-      const androidBook = await driver.findElement(By.xpath(`//li[contains(@class, 'product')]//descendant::h3[contains(text(), 'Android Quick Start Guide')]`)) 
-      expect(androidBook).toBeTruthy()
-      await androidBook.click()
+    await ShopPage.openFromTopMenu()
+    await ShopPage.pickABook()
 
       //todo check the title
       //todo save the price

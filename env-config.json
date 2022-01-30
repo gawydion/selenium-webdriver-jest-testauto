@@ -1,0 +1,8 @@
+{
+    "environment": "prod",
+    "url": "http://practice.automationtesting.in/",
+    "testuser": {
+      "email": "gawydion@gmail.com",
+      "password": "Jebacpis111"
+    }
+}
