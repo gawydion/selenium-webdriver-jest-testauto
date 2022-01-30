@@ -6,6 +6,7 @@ const HomePage = require ('../pages/homePage.js');
 const LoginPage = require ('../pages/loginPage.js');
 const CartPage = require ('../pages/cartPage.js');
 const ShopPage = require ('../pages/shopPage.js');
+const ProductPage = require ('../pages/productPage.js');
 
 // test timeout 5 minutes
 jest.setTimeout(300000)
@@ -31,31 +32,19 @@ describe('Order a book on http://practice.automationtesting.in/', () => {
   test('Buy a book', async () => {
 
     await ShopPage.openFromTopMenu()
-    await ShopPage.pickABook()
+    await ShopPage.pickProduct()
+    await ProductPage.isLoaded()
+    await ProductPage.addToBasket()
+    await CartPage.openFromTopMenu()
+    await CartPage.proceedToCheckout()
 
       //todo check the title
       //todo save the price
-
-      // add to basket
-      const addToBasketButton = await driver.findElement(By.xpath(`//button[@type='submit']`)) 
-      expect(addToBasketButton).toBeTruthy()
-      await addToBasketButton.click()
-
       //todo check popup "“Android Quick Start Guide” has been added to your basket."
-
-      //go to basket
-      cartButton = await driver.findElement(By.xpath(`//li[contains(@class, 'wpmenucart-display-standard')]`)) 
-      expect(cartButton).toBeTruthy()
-      await cartButton.click()
 
       //todo check the title
       //todo check the price
       //todo check the quantity
-
-      // proceed to checkout
-      const checkoutButton = await driver.findElement(By.xpath(`//div[@class='wc-proceed-to-checkout']/a`)) 
-      expect(checkoutButton).toBeTruthy()
-      await checkoutButton.click()
 
       //todo fill the form
       //input[@id='billing_first_name']

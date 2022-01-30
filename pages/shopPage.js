@@ -18,7 +18,7 @@ class ShopPage extends Page{
 
     //todo format string - title
     //todo wywalic tittle do env conf
-    async pickABook(){
+    async pickProduct(){
       const androidBook = await driver.findElement(this.productSelector) 
       expect(androidBook).toBeTruthy()
       await androidBook.click()

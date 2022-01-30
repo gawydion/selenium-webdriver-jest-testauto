@@ -7,12 +7,19 @@ class CartPage extends Page{
 
     get cartButtonSelector() {return By.xpath(`//li[contains(@class, 'wpmenucart-display-standard')]`)} 
     get removeItemFromCartButtonSelector() {return By.xpath(`//td[@class='product-remove']/a[@title='Remove this item']`)}
+    get proceedToCheckoutButtonSelector() {return By.xpath(`//div[@class='wc-proceed-to-checkout']/a`)}
 
     async openFromTopMenu () {
         const cartButton = await driver.findElement(this.cartButtonSelector) 
         expect(cartButton).toBeTruthy()
         await cartButton.click()
         await this.isLoaded()
+    }
+
+    async proceedToCheckout (){
+      const checkoutButton = await driver.findElement(this.proceedToCheckoutButtonSelector) 
+      expect(checkoutButton).toBeTruthy()
+      await checkoutButton.click()
     }
 
     async emptyCart (){
