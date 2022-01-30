@@ -1,8 +1,14 @@
 {
-    "environment": "prod",
     "url": "http://practice.automationtesting.in/",
     "testuser": {
       "email": "gawydion@gmail.com",
-      "password": "Jebacpis111"
+      "password": "Jebacpis111",
+      "firstName": "Robert",
+      "lastName": "Maklowicz",
+      "phoneNumber": "535535535",
+      "address": "Zbawiciela 1", 
+      "postcode": "00-666", 
+      "city": "Warsaw",
+      "country": "Poland"
     }
 }

@@ -7,6 +7,8 @@ const LoginPage = require ('../pages/loginPage.js');
 const CartPage = require ('../pages/cartPage.js');
 const ShopPage = require ('../pages/shopPage.js');
 const ProductPage = require ('../pages/productPage.js');
+const CheckoutPage = require ('../pages/checkoutPage.js');
+const OrderDetailsPage = require ('../pages/orderDetailsPage.js');
 
 // test timeout 5 minutes
 jest.setTimeout(300000)
@@ -35,8 +37,13 @@ describe('Order a book on http://practice.automationtesting.in/', () => {
     await ShopPage.pickProduct()
     await ProductPage.isLoaded()
     await ProductPage.addToBasket()
+    //tutaj się pojawia stale element ponizej
     await CartPage.openFromTopMenu()
     await CartPage.proceedToCheckout()
+    await CheckoutPage.isLoaded()
+    await CheckoutPage.setBillingCountry()
+    await CheckoutPage.setPaymentMethod()
+    await CheckoutPage.placeOrder()
 
       //todo check the title
       //todo save the price
@@ -55,30 +62,12 @@ describe('Order a book on http://practice.automationtesting.in/', () => {
       //input[@id='billing_postcode']
       //input[@id='billing_city']
 
-      const countrySelectDropDown = await driver.findElement(By.xpath(`//div[@id='s2id_billing_country']`)) 
-      expect(countrySelectDropDown).toBeTruthy()
-      await countrySelectDropDown.click()
-
-      await driver
-      .wait(until.elementLocated(By.xpath(`//input[@id='s2id_autogen1_search']`)))
-      .sendKeys('Poland', Key.ENTER)
-
       //todo check price again
 
-      //payment method
-      const paymentMethodCheckBox = await driver.findElement(By.xpath(`//input[@id='payment_method_cheque']`)) 
-      expect(paymentMethodCheckBox).toBeTruthy()
-      await paymentMethodCheckBox.click()
-
-      //place order
-      
-      const placeOrderButton = await driver.findElement(By.xpath(`//input[@id='place_order']`)) 
-      expect(placeOrderButton).toBeTruthy()
-      await placeOrderButton.click()
-
-      await driver.sleep(10000) //ten sleep pomaga - trzeba poczekać az sie order detail zaladuje
+      //await driver.sleep(10000) //ten sleep pomaga - trzeba poczekać az sie order detail zaladuje
 
       //final check
-      const orderDetailsPage = await driver.findElement(By.xpath(`//div[@class='woocommerce']//descendant::h2[contains(text(), 'Order Details')]`)) 
+      await driver.wait(until.elementLocated(OrderDetailsPage.orderDetailsHeaderSelector, 10000));
+      const orderDetailsPage = await driver.findElement(OrderDetailsPage.orderDetailsHeaderSelector)
    })
   })
