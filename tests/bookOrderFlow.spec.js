@@ -13,22 +13,16 @@ jest.setTimeout(300000)
  */
 
 describe('Order a book on http://practice.automationtesting.in/', () => {
-  it('1 open Shop page', async () => {
-
+  beforeAll(async () => {
     HomePage.open()
+    await HomePage.isLoaded()
+  })
 
-    //wait untill page is ready
-    try {
-      await driver.get(`http://practice.automationtesting.in/`)
-      await driver.wait(() => {
-        return driver.executeScript('return document.readyState').then(state => {
-          return state === 'complete'
-        })
-      }, 120000)
+  afterAll(async () => {
+    await driver.quit()
+  })
 
-      // check page title
-      const homepageTitle = await driver.getTitle()
-      expect(homepageTitle).toEqual('Automation Practice Site')
+  it('1 open Shop page', async () => {
 
       // open login screen
       const myAccButton = await driver.findElement(By.xpath(`//li[contains(@class, 'menu-item')][2]`)) //todo -> czemu ten xpath nie dziala? //li//a[contains(text(), 'My Account')]/@href
@@ -148,11 +142,8 @@ describe('Order a book on http://practice.automationtesting.in/', () => {
 
       //final check
       const orderDetailsPage = await driver.findElement(By.xpath(`//div[@class='woocommerce']//descendant::h2[contains(text(), 'Order Details')]`)) 
-    } 
+    
     // webriver quit
-    finally {
-      await driver.quit()
-     }
    })
 })
 
