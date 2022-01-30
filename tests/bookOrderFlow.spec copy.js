@@ -1,21 +1,29 @@
+// chromedriver reference: https://www.npmjs.com/package/chromedriver#running-with-selenium-webdriver
 require('chromedriver')
 const { Builder, By, Key, until } = require('selenium-webdriver')
 const { Options } = require('selenium-webdriver/chrome')
-var {driver} = require('../index.js');
-const HomePage = require ('../pages/homePage.js');
+const { getChromeWebDriver } = require('../utils/drivers')
 
 // test timeout 5 minutes
 jest.setTimeout(300000)
 
 /**
  * Scenario:
- * todo
+ *    1.0 Navigate to npm homepage - https://www.npmjs.com/
+ *      1.1 Validate that the title matches expected homepage title
+ *    2.0 Fill up search field using my search criteria (selenium-webdriver), then hit enter key
+ *      2.1 Validate that the title matches expected search page title
+ *      2.2 Validate that we have a result that matches our search criteria
+ *      2.3 Validate that result matches our keywords
+ *    3.0 Click on the package that matches our criteria
+ *      3.1 Validate that the title matches expected package page title
+ *      3.2 Validate that this package matches our search criteria
  */
-
 describe('Order a book on http://practice.automationtesting.in/', () => {
   it('1 open Shop page', async () => {
 
-    HomePage.open()
+    // webriver initiation
+    const driver = getChromeWebDriver()
 
     //wait untill page is ready
     try {
