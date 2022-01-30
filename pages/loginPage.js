@@ -18,7 +18,7 @@ class LoginPage extends Page{
 
     async loginToPortal (){
         await driver.wait(until.elementLocated(this.inputNameSelector)).sendKeys(config.testuser.email) //todo env config ogarnac
-        await driver.wait(until.elementLocated(this.inputPasswordSelector)).sendKeys('Jebacpis111', Key.ENTER)
+        await driver.wait(until.elementLocated(this.inputPasswordSelector)).sendKeys(config.testuser.password, Key.ENTER)
         const myAccountPageTitle = await driver.getTitle()
         expect(myAccountPageTitle).toEqual('My Account – Automation Practice Site')
     }

@@ -6,7 +6,7 @@ let config = require('../env-config.json');
 class ShopPage extends Page{
 
     get shopButtonSelector() {return By.xpath(`//li[contains(@class, 'menu-item')][1]`)} 
-    get productSelector() {return By.xpath(`//li[contains(@class, 'product')]//descendant::h3[contains(text(), 'Android Quick Start Guide')]`)}
+    get productSelector() {return By.xpath(`//li[contains(@class, 'product')]//descendant::h3[contains(text(), '${config.book.tittle}')]`)}
 
 
     async openFromTopMenu () {

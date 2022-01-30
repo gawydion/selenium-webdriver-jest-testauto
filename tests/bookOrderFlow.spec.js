@@ -9,6 +9,7 @@ const ShopPage = require ('../pages/shopPage.js');
 const ProductPage = require ('../pages/productPage.js');
 const CheckoutPage = require ('../pages/checkoutPage.js');
 const OrderDetailsPage = require ('../pages/orderDetailsPage.js');
+let config = require('../env-config.json');
 
 // test timeout 5 minutes
 jest.setTimeout(300000)
@@ -31,18 +32,24 @@ describe('Order a book on http://practice.automationtesting.in/', () => {
     await driver.quit()
   })
 
-  test('Buy a book', async () => {
+  test('Buy a book', async () => { // podzielic to na it - ogarnac raport
 
     await ShopPage.openFromTopMenu()
     await ShopPage.pickProduct()
     await ProductPage.isLoaded()
+
+    const bookTitle = await driver.findElement(ProductPage.bookTittleSelector).getText()
+    expect(bookTitle === config.book.tittle)
+
     await ProductPage.addToBasket()
+
     //tutaj się pojawia stale element ponizej
     await CartPage.openFromTopMenu()
     await CartPage.proceedToCheckout()
     await CheckoutPage.isLoaded()
-    await CheckoutPage.setBillingCountry()
-    await CheckoutPage.setPaymentMethod()
+
+    await CheckoutPage.setCustomerForm()
+    
     await CheckoutPage.placeOrder()
 
       //todo check the title
@@ -53,18 +60,7 @@ describe('Order a book on http://practice.automationtesting.in/', () => {
       //todo check the price
       //todo check the quantity
 
-      //todo fill the form
-      //input[@id='billing_first_name']
-      //input[@id='billing_last_name']
-      //input[@id='billing_email']
-      //input[@id='billing_phone']
-      //input[@id='billing_address_1']
-      //input[@id='billing_postcode']
-      //input[@id='billing_city']
-
       //todo check price again
-
-      //await driver.sleep(10000) //ten sleep pomaga - trzeba poczekać az sie order detail zaladuje
 
       //final check
       await driver.wait(until.elementLocated(OrderDetailsPage.orderDetailsHeaderSelector, 10000));
