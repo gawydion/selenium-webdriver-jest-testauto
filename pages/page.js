@@ -5,7 +5,7 @@
 var {driver} = require('../index.js');
 
 module.exports = class Page {
-    open (path) {
+    visit (path) {
         return driver.get(path);
     }
 
