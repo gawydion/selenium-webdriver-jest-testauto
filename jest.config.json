@@ -5,7 +5,7 @@
     [
       "./node_modules/jest-html-reporter",
       {
-        "pageTitle": "Test Project for SmartBear Interview",
+        "pageTitle": "Test Project for an Interview",
         "outputPath": "reports/index.html",
         "includeFailureMsg": true,
         "includeConsoleLog": true
