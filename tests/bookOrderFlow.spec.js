@@ -38,13 +38,25 @@ describe('Order a book on http://practice.automationtesting.in/', () => {
     await ShopPage.pickProduct()
     await ProductPage.isLoaded()
 
-    const bookTitle = await driver.findElement(ProductPage.bookTittleSelector).getText()
+    let bookTitle = await driver.findElement(ProductPage.bookTittleSelector).getText() //dorobic gettery 
     expect(bookTitle === config.book.tittle)
 
-    await ProductPage.addToBasket()
+    let bookPrice = await driver.findElement(ProductPage.bookPriceSelector).getText()
+    expect(bookPrice === config.book.price)
 
-    //tutaj się pojawia stale element ponizej
+    await ProductPage.addToBasket()
+    //todo check popup "“Android Quick Start Guide” has been added to your basket."
+
+    //sprawdzić cene w top menu
+    //tutaj się pojawia stale element ponizej, dlatego ze sie zmienia cart -> kwota sie pojawia -> ogarnac
     await CartPage.openFromTopMenu()
+
+    bookPrice = await driver.findElement(CheckoutPage.orderSubtotalPriceSelector).getText() //dorobic gettery 
+    expect(bookPrice === config.book.price)
+
+    bookTitle = await driver.findElement(CheckoutPage.bookTitleSelector).getText()
+    expect(bookTitle === config.book.tittle)
+
     await CartPage.proceedToCheckout()
     await CheckoutPage.isLoaded()
 
@@ -52,18 +64,14 @@ describe('Order a book on http://practice.automationtesting.in/', () => {
     
     await CheckoutPage.placeOrder()
 
-      //todo check the title
-      //todo save the price
-      //todo check popup "“Android Quick Start Guide” has been added to your basket."
+    //final check
+    await driver.wait(until.elementLocated(OrderDetailsPage.orderDetailsHeaderSelector, 10000));
+    const orderDetailsPage = await driver.findElement(OrderDetailsPage.orderDetailsHeaderSelector)
 
-      //todo check the title
-      //todo check the price
-      //todo check the quantity
+    bookTitle = await driver.findElement(OrderDetailsPage.bookTitleSelector).getText() //dorobic gettery 
+    expect(bookTitle === config.book.tittle)
 
-      //todo check price again
-
-      //final check
-      await driver.wait(until.elementLocated(OrderDetailsPage.orderDetailsHeaderSelector, 10000));
-      const orderDetailsPage = await driver.findElement(OrderDetailsPage.orderDetailsHeaderSelector)
+    bookPrice = await driver.findElement(OrderDetailsPage.orderTotalPriceSelector).getText()
+    expect(bookPrice === config.book.price)
    })
   })

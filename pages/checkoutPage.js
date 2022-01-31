@@ -18,6 +18,10 @@ class CheckoutPage extends Page{
     get billingPostcodeSelector()       {return By.xpath(`//input[@id='billing_postcode']`)}
     get billingCitySelector()           {return By.xpath(`//input[@id='billing_city']`)}
 
+    get orderSubtotalPriceSelector()    {return By.xpath(`//tr[@class='cart-subtotal']//span[@class = 'woocommerce-Price-amount amount' and text() = '${config.book.price}']`)}
+    get bookTitleSelector()             {return By.xpath(`//td[@class='product-name']//a[text() = '${config.book.tittle}']`)}
+    
+
     async proceedToCheckout (){
       const checkoutButton = await driver.findElement(this.proceedToCheckoutButtonSelector) 
       expect(checkoutButton).toBeTruthy()
