@@ -1,13 +1,14 @@
 const Page = require ('./page');
 var {driver} = require('../index.js');
-const { Builder, By, Key, until } = require('selenium-webdriver')
-let config = require('../env-config.json');
+const { By } = require('selenium-webdriver')
 
 class CartPage extends Page{
 
-    get cartButtonSelector() {return By.xpath(`//li[contains(@class, 'wpmenucart-display-standard')]`)} 
+    get cartButtonSelector()               {return By.xpath(`//li[contains(@class, 'wpmenucart-display-standard')]`)} 
     get removeItemFromCartButtonSelector() {return By.xpath(`//td[@class='product-remove']/a[@title='Remove this item']`)}
-    get proceedToCheckoutButtonSelector() {return By.xpath(`//div[@class='wc-proceed-to-checkout']/a`)}
+    get proceedToCheckoutButtonSelector()  {return By.xpath(`//div[@class='wc-proceed-to-checkout']/a`)}
+    get orderSubtotalPriceSelector()       {return By.xpath(`//tr[@class='cart-subtotal']//span[@class = 'woocommerce-Price-amount amount']`)}
+    get bookTitleSelector()                {return By.xpath(`//td[@class='product-name']//a`)}
 
     async openFromTopMenu () {
         const cartButton = await driver.findElement(this.cartButtonSelector) 

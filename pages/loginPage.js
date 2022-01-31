@@ -1,6 +1,6 @@
 const Page = require ('./page');
 var {driver} = require('../index.js');
-const { Builder, By, Key, until } = require('selenium-webdriver')
+const { By, Key, until } = require('selenium-webdriver')
 let config = require('../env-config.json');
 
 class LoginPage extends Page{
@@ -10,7 +10,7 @@ class LoginPage extends Page{
     get myAccountButtonSelector() {return By.xpath(`//li[contains(@class, 'menu-item')][2]`)} //todo -> czemu ten xpath nie dziala? //li//a[contains(text(), 'My Account')]/@href
 
     async openFromTopMenu () {
-        const accButton = await driver.findElement(this.myAccountButtonSelector) //todo -> czemu ten xpath nie dziala? //li//a[contains(text(), 'My Account')]/@href
+        const accButton = await driver.findElement(this.myAccountButtonSelector)
         expect(accButton).toBeTruthy()
         await accButton.click()
         this.isLoaded()

@@ -1,6 +1,6 @@
 const Page = require ('./page');
 var {driver} = require('../index.js');
-const { Builder, By, Key, until } = require('selenium-webdriver')
+const { By, Key, until } = require('selenium-webdriver')
 let config = require('../env-config.json');
 
 class CheckoutPage extends Page{
@@ -17,10 +17,6 @@ class CheckoutPage extends Page{
     get billingAddress1Selector()       {return By.xpath(`//input[@id='billing_address_1']`)}
     get billingPostcodeSelector()       {return By.xpath(`//input[@id='billing_postcode']`)}
     get billingCitySelector()           {return By.xpath(`//input[@id='billing_city']`)}
-
-    get orderSubtotalPriceSelector()    {return By.xpath(`//tr[@class='cart-subtotal']//span[@class = 'woocommerce-Price-amount amount' and text() = '${config.book.price}']`)}
-    get bookTitleSelector()             {return By.xpath(`//td[@class='product-name']//a[text() = '${config.book.tittle}']`)}
-    
 
     async proceedToCheckout (){
       const checkoutButton = await driver.findElement(this.proceedToCheckoutButtonSelector) 

@@ -1,9 +1,9 @@
 const Page = require ('./page');
-var {homeUrl} = require('../index.js'); 
+let config = require('../env-config.json');
 
 class HomePage extends Page{
     async visit () {
-        await super.visit(homeUrl)
+        await super.visit(config.url)
         this.isLoaded()
     }   
 }
