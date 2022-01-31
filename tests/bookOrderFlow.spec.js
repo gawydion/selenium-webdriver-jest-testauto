@@ -46,10 +46,10 @@ describe('Order a book on http://practice.automationtesting.in/', () => {
 
   test('[2] Add a book to the basket, check price and title in the basket', async () => { 
     await ProductPage.addToBasket()
-    //todo check popup "“Android Quick Start Guide” has been added to your basket."
 
-    //sprawdzić cene w top menu
-    //tutaj się pojawia stale element ponizej, dlatego ze sie zmienia cart -> kwota sie pojawia -> ogarnac
+    let cartPrice = await driver.findElement(CartPage.cartPriceSelector).getText()
+    expect(cartPrice === config.book.currency + config.book.price)
+
     await CartPage.openFromTopMenu()
 
     let bookPrice = await driver.findElement(CartPage.orderSubtotalPriceSelector).getText()

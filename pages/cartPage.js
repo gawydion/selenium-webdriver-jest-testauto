@@ -9,6 +9,7 @@ class CartPage extends Page{
     get proceedToCheckoutButtonSelector()  {return By.xpath(`//div[@class='wc-proceed-to-checkout']/a`)}
     get orderSubtotalPriceSelector()       {return By.xpath(`//tr[@class='cart-subtotal']//span[@class = 'woocommerce-Price-amount amount']`)}
     get bookTitleSelector()                {return By.xpath(`//td[@class='product-name']//a`)}
+    get cartPriceSelector()                {return By.xpath(`//span[@class = 'amount']`)}
 
     async openFromTopMenu () {
         const cartButton = await driver.findElement(this.cartButtonSelector) 

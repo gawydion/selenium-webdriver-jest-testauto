@@ -12,6 +12,7 @@ class ProductPage extends Page{
       const addToBasketButton = await driver.findElement(this.addToBasketButtonSelector)
       expect(addToBasketButton).toBeTruthy()
       await addToBasketButton.click()
+      await this.isLoaded()
     }
 }
 module.exports = new ProductPage();

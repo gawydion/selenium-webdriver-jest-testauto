@@ -13,6 +13,7 @@
     },
     "book":{
       "tittle": "Functional Programming in JS", 
-      "price": "250.00"
+      "price": "250.00",
+      "currency": "₹"
     }
 }
