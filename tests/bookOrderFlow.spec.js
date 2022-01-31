@@ -14,7 +14,7 @@ jest.setTimeout(60000)
 
 /**
  * Scenario:
- * [1] Pick a book and check tittle and price in product page
+ * [1] Pick a book, check tittle and price in product page
  * [2] Add a book to the basket, check price and title in the basket
  * [3] Fill the form in checkout page, place the order, check the price and the title in the order details page
  */
@@ -32,7 +32,8 @@ describe('Order a book on http://practice.automationtesting.in/', () => {
     await driver.quit()
   })
 
-  test('[1] Pick a book and check tittle and price in product page', async () => { 
+  test('Order a book on http://practice.automationtesting.in/', async () => { 
+    console.log('[1] Pick a book and check tittle and price in product page')
     await ShopPage.openFromTopMenu()
     await ShopPage.pickProduct()
     await ProductPage.isLoaded()
@@ -42,9 +43,8 @@ describe('Order a book on http://practice.automationtesting.in/', () => {
     
     expect(bookTitle === config.book.tittle)
     expect(bookPrice === config.book.price)
-  })
 
-  test('[2] Add a book to the basket, check price and title in the basket', async () => { 
+    console.log('[2] Add a book to the basket, check price and title in the basket')
     await ProductPage.addToBasket()
 
     let cartPrice = await driver.findElement(CartPage.cartPriceSelector).getText()
@@ -52,14 +52,13 @@ describe('Order a book on http://practice.automationtesting.in/', () => {
 
     await CartPage.openFromTopMenu()
 
-    let bookPrice = await driver.findElement(CartPage.orderSubtotalPriceSelector).getText()
-    let bookTitle = await driver.findElement(CartPage.bookTitleSelector).getText()
+    bookPrice = await driver.findElement(CartPage.orderSubtotalPriceSelector).getText()
+    bookTitle = await driver.findElement(CartPage.bookTitleSelector).getText()
 
     expect(bookPrice === config.book.price)
     expect(bookTitle === config.book.tittle)
-  })
 
-  test('[3] Fill the form in checkout page, place the order, check the price and the title in the order details page', async () => { 
+    console.log('[3] Fill the form in checkout page, place the order, check the price and the title in the order details page')
     await CartPage.proceedToCheckout()
     await CheckoutPage.isLoaded()
     await CheckoutPage.setCustomerForm()
@@ -67,8 +66,8 @@ describe('Order a book on http://practice.automationtesting.in/', () => {
 
     await driver.wait(until.elementLocated(OrderDetailsPage.orderDetailsHeaderSelector, 10000));
 
-    let bookTitle = await driver.findElement(OrderDetailsPage.bookTitleSelector).getText() 
-    let bookPrice = await driver.findElement(OrderDetailsPage.orderTotalPriceSelector).getText()
+    bookTitle = await driver.findElement(OrderDetailsPage.bookTitleSelector).getText() 
+    bookPrice = await driver.findElement(OrderDetailsPage.orderTotalPriceSelector).getText()
 
     expect(bookPrice === config.book.price)
     expect(bookTitle === config.book.tittle)

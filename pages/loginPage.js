@@ -7,7 +7,7 @@ class LoginPage extends Page{
 
     get inputNameSelector()       {return By.xpath(`//input[@name='username']`)}
     get inputPasswordSelector()   {return By.xpath(`//input[@id='password']`)}
-    get myAccountButtonSelector() {return By.xpath(`//li[contains(@class, 'menu-item')][2]`)} //todo -> czemu ten xpath nie dziala? //li//a[contains(text(), 'My Account')]/@href
+    get myAccountButtonSelector() {return By.xpath(`//li[contains(@class, 'menu-item')]//a[text() = 'My Account']`)}
 
     async openFromTopMenu () {
         const accButton = await driver.findElement(this.myAccountButtonSelector)
@@ -17,8 +17,8 @@ class LoginPage extends Page{
     }
 
     async loginToPortal (){
-        await driver.wait(until.elementLocated(this.inputNameSelector)).sendKeys(config.testuser.email) //todo env config ogarnac
-        await driver.wait(until.elementLocated(this.inputPasswordSelector)).sendKeys(config.testuser.password, Key.ENTER)
+        await driver.wait(until.elementLocated(this.inputNameSelector)).sendKeys(config.testuser.email)
+        await driver.wait(until.elementLocated(this.inputPasswordSelector)).sendKeys(atob(config.testuser.password), Key.ENTER)
         const myAccountPageTitle = await driver.getTitle()
         expect(myAccountPageTitle).toEqual('My Account – Automation Practice Site')
     }

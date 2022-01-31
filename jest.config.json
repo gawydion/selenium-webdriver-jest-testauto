@@ -7,7 +7,8 @@
       {
         "pageTitle": "Test Project for SmartBear Interview",
         "outputPath": "reports/index.html",
-        "includeFailureMsg": true
+        "includeFailureMsg": true,
+        "includeConsoleLog": true
       }
     ]
   ]
