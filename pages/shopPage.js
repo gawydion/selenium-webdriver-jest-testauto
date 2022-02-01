@@ -20,6 +20,5 @@ class ShopPage extends Page{
       expect(androidBook).toBeTruthy()
       await androidBook.click()
     }
-
 }
 module.exports = new ShopPage();

@@ -9,7 +9,6 @@ class CheckoutPage extends Page{
     get billingCountrySearchSelector()  {return By.xpath(`//input[@id='s2id_autogen1_search']`)}
     get paymentMethodCheckBoxSelector() {return By.xpath(`//input[@id='payment_method_cheque']`)}
     get placeOrderButtonSelector()      {return By.xpath(`//input[@id='place_order']`)}
-
     get billingFirstNameSelector()      {return By.xpath(`//input[@id='billing_first_name']`)}
     get billingLastNameSelector()       {return By.xpath(`//input[@id='billing_last_name']`)}
     get billingEmailSelector()          {return By.xpath(`//input[@id='billing_email']`)}
@@ -58,7 +57,6 @@ class CheckoutPage extends Page{
       await this.setBillingCountry()
       await this.setPaymentMethod()
     }
-
     
     async cleartCustomerForm (){
       await driver.wait(until.elementLocated(this.billingFirstNameSelector)).clear()
@@ -68,8 +66,6 @@ class CheckoutPage extends Page{
       await driver.wait(until.elementLocated(this.billingAddress1Selector)).clear()
       await driver.wait(until.elementLocated(this.billingPostcodeSelector)).clear()
       await driver.wait(until.elementLocated(this.billingCitySelector)).clear()
-    }
-
-    
+    } 
 }
 module.exports = new CheckoutPage();
